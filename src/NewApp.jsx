@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearch } from "./hooks/useSearch";
-import { useClickOutside } from "./hooks/useOutsideHandler";
+import { useClickOutside } from "./hooks/useClickOutside";
 
 function App() {
 	const searchInputRef = useRef(null);
@@ -17,7 +17,8 @@ function App() {
 	} = useSearch();
 
 	const [isAutocompleteVisible, setIsAutocompleteVisible] = useState(false);
-	const listRef = useRef(null);
+	const formRef = useRef(null);
+	useClickOutside(formRef, () => setIsAutocompleteVisible(false));
 
 	useEffect(() => {
 		const storedSearchHistory = localStorage.getItem("searchHistory");
@@ -31,9 +32,6 @@ function App() {
 	const handleSearchSubmit = () => {
 		handleSearch(searchQuery);
 	};
-
-	const formRef = useRef(null);
-	useClickOutside(formRef, () => setIsAutocompleteVisible(false));
 
 	return (
 		<main>
@@ -49,7 +47,7 @@ function App() {
 					/>
 					<button onClick={handleSearchSubmit}>SEARCH</button>
 				</div>
-				<ul className='autosuggested-list' ref={listRef}>
+				<ul className='autosuggested-list'>
 					{isAutocompleteVisible &&
 						autocompleteResults.map((result, index) => (
 							<li key={index}>

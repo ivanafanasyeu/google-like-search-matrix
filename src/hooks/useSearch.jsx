@@ -21,7 +21,6 @@ export function useSearch() {
 
 		setCurrentResults(matchingResults);
 
-		// Update the search history and store it in local storage.
 		if (!searchHistory.includes(query)) {
 			const updatedHistory = [query, ...searchHistory];
 			setSearchHistory(updatedHistory);
@@ -59,7 +58,7 @@ export function useSearch() {
 	const handleAutocompleteClick = result => {
 		setSearchQuery(result.title);
 		setAutocompleteResults([]);
-		handleSearch(result.title); // Trigger a new search with the selected item.
+		handleSearch(result.title);
 	};
 
 	const handleRemoveItem = item => {
